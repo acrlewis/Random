@@ -89,6 +89,29 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	cf create-space development
 	cf target -s development
 
+### Deploy MySQL Services to local CloudFoundry Deployment
+	
+	cd ~/workspace
+	git clone https://github.com/cloudfoundry/cf-mysql-release.git
+	cd ~/workspace/cf-mysql-release
+	./update
+	git checkout v8	
+	bosh upload release releases/cf-mysql-8.yml
+	./bosh-lite/make_manifest_spiff_mysql
+	
+vi the manifests/cf-mysql-manifest.yml to change the following:
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-lucid-go_agent
+    version: 60
+
+    
+	bosh deployment ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml
+	bosh deploy
+	bosh run errand broker-registrar
+
+### Create a MySQL service for pet clinic
+	cf cs p-mysql 100mb-dev petclinic-mysql
+
 ### Deploy Additional Services to local CloudFoundry Deployment
 
 	cd ~/workspace
@@ -105,24 +128,5 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	bosh -n deploy
 
-### Deploy Additional Services to local CloudFoundry Deployment
-	
-	cd ~/workspace
-	git clone https://github.com/cloudfoundry/cf-mysql-release.git
-	cd ~/workspace/cf-mysql-release
-	./update
-	git checkout v8	
-	bosh upload release releases/cf-mysql-8.yml
-	./bosh-lite/make_manifest_spiff_mysql
-	
-vi the deployment.yml to change the following:
-  stemcell:
-    name: bosh-warden-boshlite-ubuntu-lucid-go_agent
-    version: 60
 
-    
-	bosh deployment ~/workspace/deployments/mydevenv/cf-mysql-mydevenv.yml
-	bosh deploy
-	bosh run errand broker-registrar
-	cf cs p-mysql 100mb-dev petclinic-mysql
 	
