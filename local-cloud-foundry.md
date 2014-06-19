@@ -96,8 +96,13 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	cd cf-services-contrib-release
 	bundle install
 	bosh upload release releases/cf-services-contrib-5.yml
-	
 	templates/make_manifest warden
+
+vi the tmp/contrib-services-warden-manifest.yml to change the following in three places:
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-lucid-go_agent
+    version: 60
+
 	bosh -n deploy
 
 ### Deploy Additional Services to local CloudFoundry Deployment
@@ -106,13 +111,11 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	git clone https://github.com/cloudfoundry/cf-mysql-release.git
 	cd ~/workspace/cf-mysql-release
 	./update
-	git checkout v8
+	git checkout v8	
 	bosh upload release releases/cf-mysql-8.yml
 	./bosh-lite/make_manifest_spiff_mysql
-	bosh download public stemcell bosh-stemcell-53-warden-boshlite-ubuntu.tgz
-	bosh upload stemcell bosh-stemcell-53-warden-boshlite-ubuntu.tgz
 	
-vi the manifest to add the following:
+vi the deployment.yml to change the following:
   stemcell:
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
@@ -123,4 +126,3 @@ vi the manifest to add the following:
 	bosh run errand broker-registrar
 	cf cs p-mysql 100mb-dev petclinic-mysql
 	
-
