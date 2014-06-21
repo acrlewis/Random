@@ -76,7 +76,8 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 
 ### Deploy CF to bosh-lite
 
-    bosh deployment manifests/cf-manifest.yml # This will be done for you by make_manifest_spiff
+    bosh deployment manifests/cf-manifest.yml 
+    # This will be done for you by make_manifest_spiff
     bosh deploy
     #enter yes to confirm
     
@@ -100,7 +101,7 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	bosh upload release releases/cf-mysql-8.yml
 	./bosh-lite/make_manifest_spiff_mysql
 	
-vi the manifests/cf-mysql-manifest.yml to change the following:
+vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to change the following:
   stemcell:
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
