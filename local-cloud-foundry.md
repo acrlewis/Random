@@ -3,10 +3,11 @@
 	
 	brew install ruby
 	\curl -L https://get.rvm.io | bash -s stable
+	sudo rvm remove 1.9.3
 	rvm install 1.9.3
 	rvm use ruby-1.9.3
 	mkdir ~/workspace
-	cd wrokspace
+	cd workspace
 	git clone https://github.com/cloudfoundry/bosh-lite.git
 	cd bosh-lite
 	bundle
@@ -24,7 +25,7 @@
     
     bosh target 192.168.50.4 lite
     #Your username: admin
-    #Enter password: *****
+    #Enter password: admin
     
 
 Add a set of route entries to your local route table to enable direct Warden container access every time your networking gets reset (e.g. reboot or connect to a different network). Your sudo password may be required.
