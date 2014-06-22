@@ -130,5 +130,10 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	bosh -n deploy
 
+	cf create-service-auth-token rabbitmq core c1oudc0w
+
+	cf cs rabbitmq default test-rabbit
+	
+
 
 	
