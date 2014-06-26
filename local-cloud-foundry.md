@@ -1,9 +1,12 @@
 ### Install Ruby and RVM and git Bosh-Lite
-	
-	
+	brew install cask
+	brew install git
+	brew install vagrant
+	brew cask install virtualbox
 	brew install ruby
 	\curl -L https://get.rvm.io | bash -s stable
 	sudo rvm remove 1.9.3
+	
 	rvm install 1.9.3
 	rvm use ruby-1.9.3
 	mkdir ~/workspace
@@ -17,7 +20,7 @@
 ### Start Vagrant from the base directory of this repository. This uses the Vagrantfile.
 
     
-    vagrant up --provider virtualbox
+    vagrant up
     
 
 ### Target the BOSH Director and login with admin/admin.
@@ -134,6 +137,11 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	cf cs rabbitmq default test-rabbit
 	
+### For some reason, when I rebuild everything and try to push an app, I get an error about a failed buildpack. When I reset the deployment to CF, the app push works
 
+	cf apps
+	cf delete <app you deployed and it failed>
+	cd ~/workspace/bosh-lite
+	bosh deployment manifests/cf-manifest.yml 
 
 	
