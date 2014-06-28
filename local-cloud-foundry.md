@@ -77,7 +77,7 @@ A stemcell is a VM template with an embedded BOSH Agent. BOSH Lite uses the Ward
 If you want to change the jobs properties for this bosh-lite deployment, e.g. number of nats servers, you can change it in the template located under cf-release/templates/cf-infrastructure-warden.yml.
 
 
-### Deploy CF to bosh-lite
+### Deploy CF with bosh-lite
 
     bosh deployment manifests/cf-manifest.yml 
     # This will be done for you by make_manifest_spiff
@@ -137,11 +137,29 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	cf cs rabbitmq default test-rabbit
 	
-### For some reason, when I rebuild everything and try to push an app, I get an error about a failed buildpack. When I reset the deployment to CF, the app push works
+For some reason, when I rebuild everything and try to push an app, I get an error about a failed buildpack. When I reset the deployment to CF, the app push works
 
 	cf apps
 	cf delete <app you deployed and it failed>
 	cd ~/workspace/bosh-lite
-	bosh deployment manifests/cf-manifest.yml 
+	bosh deployment manifests/cf-manifest.yml
 
-	
+### If you run into trouble
+Sometimes, you have to start over with the local cf install. In that case, this has worked for me:
+	cd ~/workspace/bosh-lite
+	vagrant destory -f
+	git pull
+	vagrant up
+	scripts/add-route
+    bosh upload stemcell latest-bosh-stemcell-warden.tgz
+    cd ~/workspace/cf-release
+    bosh upload release releases/cf-173.yml
+    cd ~/workspace/bosh-lite
+    ./scripts/make_manifest_spiff
+    bosh deployment manifests/cf-manifest.yml 
+    bosh deploy
+    #enter yes to confirm
+
+Then follow the instructions starting with ### Install CLoudFoundry CLI and login
+
+
