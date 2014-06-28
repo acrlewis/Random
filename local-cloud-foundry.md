@@ -59,10 +59,7 @@ A stemcell is a VM template with an embedded BOSH Agent. BOSH Lite uses the Ward
 ### Clone a copy of cf-release:
     
     cd ~/workspace
-    git clone https://github.com/cloudfoundry/cf-release
-    
-
-    
+    git clone https://github.com/cloudfoundry/cf-release 
     cd ~/workspace/cf-release
     ./update
     git checkout v173
@@ -109,7 +106,6 @@ vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
 
-    
 	bosh deployment ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml
 	bosh deploy
 	bosh run errand broker-registrar
