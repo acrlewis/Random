@@ -145,7 +145,9 @@ For some reason, when I rebuild everything and try to push an app, I get an erro
 	bosh deployment manifests/cf-manifest.yml
 
 ### If you run into trouble
+
 Sometimes, you have to start over with the local cf install. In that case, this has worked for me:
+	
 	cd ~/workspace/bosh-lite
 	vagrant destory -f
 	git pull
@@ -160,6 +162,6 @@ Sometimes, you have to start over with the local cf install. In that case, this 
     bosh deploy
     #enter yes to confirm
 
-Then follow the instructions starting with ### Install CLoudFoundry CLI and login
+Then follow the instructions starting with 'Install CLoudFoundry CLI and login'
 
 
