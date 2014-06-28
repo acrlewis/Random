@@ -84,8 +84,9 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 ### Install CLoudFoundry CLI and login
 	
 	brew install cloudfoundry-cli
-	cf api http://api.10.244.0.34.xip.io
+	cf api http://api.10.244.0.34.xip.io --skip-ssl-validation
 	cf login -u admin -p admin
+
 	cf create-org me
 	cf target -o me
 	cf create-space development
@@ -113,7 +114,7 @@ vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to
 ### Create a MySQL service for pet clinic
 	cf cs p-mysql 100mb-dev petclinic-mysql
 
-### Deploy Additional Services to local CloudFoundry Deployment
+### Deploy Additional Services to Local CloudFoundry Deployment
 
 	cd ~/workspace
 	git clone https://github.com/cloudfoundry-community/cf-services-contrib-release.git
@@ -157,7 +158,14 @@ Sometimes, you have to start over with the local cf install. In that case, this 
     bosh deployment manifests/cf-manifest.yml 
     bosh deploy
     #enter yes to confirm
+    cf api http://api.10.244.0.34.xip.io --skip-ssl-validation
+	cf login -u admin -p admin
+	#hit enter to skip Org selection
+	cf create-org me
+	cf target -o me
+	cf create-space development
+	cf target -s development
 
-Then follow the instructions starting with 'Install CLoudFoundry CLI and login'
+Then follow the instructions starting with 'Deploy Additional Services to Local CloudFoundry Deployment'
 
 
