@@ -128,6 +128,7 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
 
+    bosh deployment tmp/contrib-services-warden-manifest.yml
 	bosh -n deploy
 
 	cf create-service-auth-token rabbitmq core c1oudc0w
