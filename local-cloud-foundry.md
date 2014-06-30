@@ -1,7 +1,6 @@
 ### Install Ruby and RVM and git Bosh-Lite
 	brew install cask
 	brew install git
-	brew install vagrant
 	brew cask install virtualbox
 	brew install ruby
 	\curl -L https://get.rvm.io | bash -s stable
