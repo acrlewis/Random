@@ -4,16 +4,17 @@
 	brew cask install virtualbox
 	brew install ruby
 	\curl -L https://get.rvm.io | bash -s stable
-	sudo rvm remove 1.9.3
+	sudo rvm remove 1.9.3-p545
 	
-	rvm install 1.9.3
-	rvm use ruby-1.9.3
+	rvm install 1.9.3-p545
+	rvm use ruby-1.9.3-p545
 	mkdir ~/workspace
 	cd workspace
 	git clone https://github.com/cloudfoundry/bosh-lite.git
 	cd bosh-lite
 	bundle
 	gem install bosh_cli
+	bundle install
 	
 
 ### Start Vagrant from the base directory of this repository. This uses the Vagrantfile.
@@ -107,7 +108,7 @@ vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to
     version: 60
 
 	bosh deployment ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml
-	bosh deploy
+	bosh -n deploy
 	bosh run errand broker-registrar
 
 ### Create a MySQL service for pet clinic
@@ -160,7 +161,7 @@ Sometimes, you have to start over with the local cf install. In that case, this 
     cd ~/workspace/bosh-lite
     ./scripts/make_manifest_spiff
     bosh deployment manifests/cf-manifest.yml 
-    bosh deploy
+    bosh -n deploy
     #enter yes to confirm
     cf api http://api.10.244.0.34.xip.io --skip-ssl-validation
 	cf login -u admin -p admin
