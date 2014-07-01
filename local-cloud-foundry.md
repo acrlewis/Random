@@ -4,10 +4,10 @@
 	brew cask install virtualbox
 	brew install ruby
 	\curl -L https://get.rvm.io | bash -s stable
-	sudo rvm remove 1.9.3-p545
+	rvm remove 1.9.3-p547
 	
-	rvm install 1.9.3-p545
-	rvm use ruby-1.9.3-p545
+	rvm install 1.9.3-p547
+	rvm use ruby-1.9.3-p547
 	mkdir ~/workspace
 	cd workspace
 	git clone https://github.com/cloudfoundry/bosh-lite.git
