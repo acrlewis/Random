@@ -15,12 +15,13 @@
 	bundle
 	gem install bosh_cli
 	bundle install
+	bundle update
 	
 
 ### Start Vagrant from the base directory of this repository. This uses the Vagrantfile.
 
     
-    vagrant up
+    vagrant up --provider vmware_fusion
     
 
 ### Target the BOSH Director and login with admin/admin.
@@ -77,9 +78,7 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 ### Deploy CF with bosh-lite
 
     bosh deployment manifests/cf-manifest.yml 
-    # This will be done for you by make_manifest_spiff
-    bosh deploy
-    #enter yes to confirm
+    bosh -n deploy
     
 ### Install CLoudFoundry CLI and login
 	
@@ -134,6 +133,14 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 	cf create-service-auth-token rabbitmq core c1oudc0w
 
 	cf cs rabbitmq default test-rabbit
+
+### Deploy Docker Services Capabilities to Local CloudFoundry Deployment
+
+	git clone https://github.com/cf-platform-eng/docker-boshrelease.git
+	cd docker-boshrelease
+	wget https://s3.amazonaws.com/bosh-jenkins-artifacts/bosh-stemcell/aws/light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
+	bosh upload stemcell light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
+	bosh upload release releases/docker-4.yml
 	
 For some reason, when I rebuild everything and try to push an app, I get an error about a failed buildpack. When I reset the deployment to CF, the app push works
 
@@ -155,6 +162,7 @@ Sometimes, you have to start over with the local cf install. In that case, this 
 	git pull
 	vagrant up
 	scripts/add-route
+	bosh target 192.168.50.4 lite
     bosh upload stemcell latest-bosh-stemcell-warden.tgz
     cd ~/workspace/cf-release
     bosh upload release releases/cf-173.yml
