@@ -1,4 +1,7 @@
 ### Install Ruby and RVM and git Bosh-Lite
+	brew tap pivotal/tap
+	brew tap xoebus/homebrew-cloudfoundry
+	
 	brew install cask
 	brew install git
 	brew cask install virtualbox
