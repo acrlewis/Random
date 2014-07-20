@@ -1,7 +1,7 @@
 ### Install Ruby and RVM and git Bosh-Lite
 	brew tap pivotal/tap
 	brew tap xoebus/homebrew-cloudfoundry
-	
+
 	brew install cask
 	brew install git
 	brew cask install virtualbox
@@ -137,7 +137,7 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	cf cs rabbitmq default test-rabbit
 
-### Deploy Docker Services Capabilities to Local CloudFoundry Deployment
+### Deploy Docker Services Capabilities to Local CloudFoundry Deployment (WORK IN PROGRESS)
 
 	git clone https://github.com/cf-platform-eng/docker-boshrelease.git
 	cd docker-boshrelease
