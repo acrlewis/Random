@@ -66,12 +66,12 @@ A stemcell is a VM template with an embedded BOSH Agent. BOSH Lite uses the Ward
     git clone https://github.com/cloudfoundry/cf-release 
     cd ~/workspace/cf-release
     ./update
-    git checkout v173
+    git checkout v176
     
 
 ### Upload final release
 
-    bosh upload release releases/cf-173.yml
+    bosh upload release releases/cf-176.yml
     cd ~/workspace/bosh-lite
     ./scripts/make_manifest_spiff
 
@@ -168,7 +168,7 @@ Sometimes, you have to start over with the local cf install. In that case, this 
 	bosh target 192.168.50.4 lite
     bosh upload stemcell latest-bosh-stemcell-warden.tgz
     cd ~/workspace/cf-release
-    bosh upload release releases/cf-173.yml
+    bosh upload release releases/cf-176.yml
     cd ~/workspace/bosh-lite
     ./scripts/make_manifest_spiff
     bosh deployment manifests/cf-manifest.yml 
