@@ -84,7 +84,7 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
     bosh deployment manifests/cf-manifest.yml 
     bosh -n deploy
     
-### Install CLoudFoundry CLI and login
+### Install CloudFoundry CLI and login
 	
 	brew install cloudfoundry-cli
 	cf api http://api.10.244.0.34.xip.io --skip-ssl-validation
@@ -163,7 +163,7 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	bosh upload stemcell light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
 	bosh upload release releases/docker-4.yml
 
-### BOSH
+### Deployments
 
 	➜  bosh deployments
 
@@ -178,6 +178,8 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	+---------------------+-----------------------+-----------------------------------------------+
 	| cf-warden-mysql     | cf-mysql/8            | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
 	+---------------------+-----------------------+-----------------------------------------------+
+
+### Marketplace of Services
 
 	➜  cf marketplace
 	Getting services from marketplace in org me / space development as admin...
