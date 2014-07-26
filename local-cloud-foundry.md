@@ -73,6 +73,7 @@ A stemcell is a VM template with an embedded BOSH Agent. BOSH Lite uses the Ward
 
     bosh upload release releases/cf-176.yml
     cd ~/workspace/bosh-lite
+    ./update
     ./scripts/make_manifest_spiff
 
 If you want to change the jobs properties for this bosh-lite deployment, e.g. number of nats servers, you can change it in the template located under cf-release/templates/cf-infrastructure-warden.yml.
@@ -104,7 +105,7 @@ If you want to change the jobs properties for this bosh-lite deployment, e.g. nu
 	bosh upload release releases/cf-mysql-8.yml
 	./bosh-lite/make_manifest_spiff_mysql
 	
-vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to change the following:
+* vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to change the following:
   stemcell:
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
@@ -125,10 +126,12 @@ vi the ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml to
 	bosh upload release releases/cf-services-contrib-5.yml
 	templates/make_manifest warden
 
-vi the tmp/contrib-services-warden-manifest.yml to change the following in three places:
+* vi the tmp/contrib-services-warden-manifest.yml to change the following in three places:
   stemcell:
     name: bosh-warden-boshlite-ubuntu-lucid-go_agent
     version: 60
+
+  Change 10.244.1 to 10.244.4 throughout
 
     bosh deployment tmp/contrib-services-warden-manifest.yml
 	bosh -n deploy
@@ -137,6 +140,21 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 
 	cf cs rabbitmq default test-rabbit
 
+### Deploy Riak-CS
+	cd ~/workspace
+	git clone https://github.com/cloudfoundry/cf-riak-cs-release.git
+	rvm install ruby-2.0.0-p353
+	rvm use ruby-2.0.0-p353 
+	cd ~/workspace/cf-riak-cs-release
+	gem install bosh_cli
+	./update
+	git checkout v4
+	bosh upload release releases/cf-riak-cs-4.yml
+	./bosh-lite/make_manifest
+	bosh upload release bosh-lite/manifests/cf-riak-cs-manifest.yml
+	bosh -n deploy
+	bosh run errand broker-registrar
+
 ### Deploy Docker Services Capabilities to Local CloudFoundry Deployment (WORK IN PROGRESS)
 
 	git clone https://github.com/cf-platform-eng/docker-boshrelease.git
@@ -144,44 +162,40 @@ vi the tmp/contrib-services-warden-manifest.yml to change the following in three
 	wget https://s3.amazonaws.com/bosh-jenkins-artifacts/bosh-stemcell/aws/light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
 	bosh upload stemcell light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
 	bosh upload release releases/docker-4.yml
-	
-For some reason, when I rebuild everything and try to push an app, I get an error about a failed buildpack. When I reset the deployment to CF, the app push works
 
-	cf apps
-	cf delete <app you deployed and it failed>
-	cd ~/workspace/bosh-lite
-	bosh deployment manifests/cf-manifest.yml
+### BOSH
+
+	➜  bosh deployments
+
+	+---------------------+-----------------------+-----------------------------------------------+
+	| Name                | Release(s)            | Stemcell(s)                                   |
+	+---------------------+-----------------------+-----------------------------------------------+
+	| cf-riak-cs          | cf-riak-cs/4          | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
+	+---------------------+-----------------------+-----------------------------------------------+
+	| cf-services-contrib | cf-services-contrib/5 | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
+	+---------------------+-----------------------+-----------------------------------------------+
+	| cf-warden           | cf/176                | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
+	+---------------------+-----------------------+-----------------------------------------------+
+	| cf-warden-mysql     | cf-mysql/8            | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
+	+---------------------+-----------------------+-----------------------------------------------+
+
+	➜  cf marketplace
+	Getting services from marketplace in org me / space development as admin...
+	OK
+
+	service      plans       description   
+	mongodb      default     MongoDB NoSQL database   
+	p-mysql      100mb-dev   A MySQL service for application development and testing   
+	p-riakcs     developer   An S3-compatible object store based on Riak CS   
+	postgresql   default     PostgreSQL database   
+	rabbitmq     default     RabbitMQ message queue   
+	redis        default     Redis key-value store   
+
 
 ### If you run into trouble
 
 Sometimes you need to restart the director
 
 	vagrant ssh -c "sudo sv restart director"
-
-Sometimes, you have to start over with the local cf install. In that case, this has worked for me:
-	
-	cd ~/workspace/bosh-lite
-	vagrant destroy -f
-	git pull
-	vagrant up
-	scripts/add-route
-	bosh target 192.168.50.4 lite
-    bosh upload stemcell latest-bosh-stemcell-warden.tgz
-    cd ~/workspace/cf-release
-    bosh upload release releases/cf-176.yml
-    cd ~/workspace/bosh-lite
-    ./scripts/make_manifest_spiff
-    bosh deployment manifests/cf-manifest.yml 
-    bosh -n deploy
-    #enter yes to confirm
-    cf api http://api.10.244.0.34.xip.io --skip-ssl-validation
-	cf login -u admin -p admin
-	#hit enter to skip Org selection
-	cf create-org me
-	cf target -o me
-	cf create-space development
-	cf target -s development
-
-Then follow the instructions starting with 'Deploy Additional Services to Local CloudFoundry Deployment'
 
 
