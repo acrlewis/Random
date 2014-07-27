@@ -66,12 +66,12 @@ A stemcell is a VM template with an embedded BOSH Agent. BOSH Lite uses the Ward
     git clone https://github.com/cloudfoundry/cf-release 
     cd ~/workspace/cf-release
     ./update
-    git checkout v176
+    git checkout v173
     
 
 ### Upload final release
 
-    bosh upload release releases/cf-176.yml
+    bosh upload release releases/cf-173.yml
     cd ~/workspace/bosh-lite
     ./update
     ./scripts/make_manifest_spiff
