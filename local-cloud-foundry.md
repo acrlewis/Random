@@ -111,7 +111,7 @@ Deploy
 		cf cs rabbitmq default test-rabbit
 
 ### Deploy Admin-UI
-
+	cd ~/workspac
 	bosh upload release https://admin-ui-boshrelease.s3.amazonaws.com/boshrelease-admin-ui-3.tgz
 	git clone https://github.com/cloudfoundry-community/admin-ui-boshrelease.git
 	cd admin-ui-boshrelease
@@ -122,23 +122,24 @@ Deploy
 
 Now you can browse to http://admin.10.244.0.34.xip.io and login with your cloud foundry admin user.
 
-### Deploy Riak-CS
+### Deploy Riak-CS (WORK IN PROGRESS)
 	cd ~/workspace
 	git clone https://github.com/cloudfoundry/cf-riak-cs-release.git
-	rvm install ruby-2.0.0-p353
-	rvm use ruby-2.0.0-p353
+	rvm install ruby-2.0.0-p598
+	rvm install ruby-2.1.4
 	cd ~/workspace/cf-riak-cs-release
+	bundle install
 	gem install bosh_cli
 	./update
-	git checkout v4
-	bosh upload release releases/cf-riak-cs-4.yml
+	git checkout v5
+	bosh upload release releases/cf-riak-cs-5.yml
 	./bosh-lite/make_manifest
 	bosh upload release bosh-lite/manifests/cf-riak-cs-manifest.yml
 	bosh -n deploy
 	bosh run errand broker-registrar
 
 ### Deploy Docker Services Capabilities to Local CloudFoundry Deployment (WORK IN PROGRESS)
-
+	cd ~/workspace
 	git clone https://github.com/cf-platform-eng/docker-boshrelease.git
 	cd docker-boshrelease
 	wget https://s3.amazonaws.com/bosh-jenkins-artifacts/bosh-stemcell/aws/light-bosh-stemcell-2624-aws-xen-ubuntu-trusty-go_agent.tgz
@@ -149,17 +150,17 @@ Now you can browse to http://admin.10.244.0.34.xip.io and login with your cloud 
 
 	bosh deployments
 
-	+---------------------+-----------------------+-----------------------------------------------+
-	| Name                | Release(s)            | Stemcell(s)                                   |
-	+---------------------+-----------------------+-----------------------------------------------+
-	| cf-riak-cs          | cf-riak-cs/4          | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
-	+---------------------+-----------------------+-----------------------------------------------+
-	| cf-services-contrib | cf-services-contrib/5 | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
-	+---------------------+-----------------------+-----------------------------------------------+
-	| cf-warden           | cf/176                | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
-	+---------------------+-----------------------+-----------------------------------------------+
-	| cf-warden-mysql     | cf-mysql/8            | bosh-warden-boshlite-ubuntu-lucid-go_agent/60 |
-	+---------------------+-----------------------+-----------------------------------------------+
+	+---------------------+-----------------------+-------------------------------------------------+
+	| Name                | Release(s)            | Stemcell(s)                                     |
+	+---------------------+-----------------------+-------------------------------------------------+
+	| admin-ui            | admin-ui/3            | bosh-warden-boshlite-ubuntu-trusty-go_agent/389 |
+	+---------------------+-----------------------+-------------------------------------------------+
+	| cf-services-contrib | cf-services-contrib/6 | bosh-warden-boshlite-ubuntu-trusty-go_agent/389 |
+	+---------------------+-----------------------+-------------------------------------------------+
+	| cf-warden           | cf/193                | bosh-warden-boshlite-ubuntu-trusty-go_agent/389 |
+	+---------------------+-----------------------+-------------------------------------------------+
+	| cf-warden-mysql     | cf-mysql/15           | bosh-warden-boshlite-ubuntu-trusty-go_agent/389 |
+	+---------------------+-----------------------+-------------------------------------------------+
 
 ### Marketplace of Services
 
