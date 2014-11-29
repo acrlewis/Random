@@ -81,6 +81,7 @@ change "Latest" to 389 for the stemcell version
 	bosh run errand broker-registrar
 
 Create a MySQL service for pet clinic
+
 	cf cs p-mysql 100mb-dev petclinic-mysql
 
 ### Deploy Additional Services to Local CloudFoundry Deployment
@@ -146,7 +147,7 @@ Now you can browse to http://admin.10.244.0.34.xip.io and login with your cloud 
 
 ### Deployments
 
-	➜  bosh deployments
+	bosh deployments
 
 	+---------------------+-----------------------+-----------------------------------------------+
 	| Name                | Release(s)            | Stemcell(s)                                   |
