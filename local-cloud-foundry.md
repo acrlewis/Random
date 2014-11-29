@@ -73,6 +73,7 @@ Add a set of route entries to your local route table to enable direct Warden con
 	./bosh-lite/make_manifest_spiff_mysql
 
 change "Latest" to 389 for the stemcell version
+
 	nano ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml
 
 	bosh deployment ~/workspace/cf-mysql-release/bosh-lite/manifests/cf-mysql-manifest.yml
@@ -93,6 +94,7 @@ Create a MySQL service for pet clinic
 
 change "Latest" to 389 for the stemcell version
 chang 10.244.1. to 10.244.3.
+
 	nano tmp/contrib-services-warden-manifest.yml
 
   bosh deployment tmp/contrib-services-warden-manifest.yml
