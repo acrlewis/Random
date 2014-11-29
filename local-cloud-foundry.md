@@ -99,17 +99,16 @@ chang 10.244.1. to 10.244.3.
 	nano tmp/contrib-services-warden-manifest.yml
 
 Deploy
-	
-  bosh deployment tmp/contrib-services-warden-manifest.yml
-	bosh -n deploy
-	cf create-service-auth-token rabbitmq core c1oudc0w
-	cf create-service-auth-token postgresql core c1oudc0w
-	cf create-service-auth-token redis core c1oudc0w
-	cf create-service-auth-token mongodb core c1oudc0w
-	cf create-service-auth-token elasticsearch core c1oudc0w
-	cf create-service-auth-token swift core c1oudc0w
 
-	cf cs rabbitmq default test-rabbit
+	  bosh deployment tmp/contrib-services-warden-manifest.yml
+		bosh -n deploy
+		cf create-service-auth-token rabbitmq core c1oudc0w
+		cf create-service-auth-token postgresql core c1oudc0w
+		cf create-service-auth-token redis core c1oudc0w
+		cf create-service-auth-token mongodb core c1oudc0w
+		cf create-service-auth-token elasticsearch core c1oudc0w
+		cf create-service-auth-token swift core c1oudc0w
+		cf cs rabbitmq default test-rabbit
 
 ### Deploy Admin-UI
 
